@@ -1,38 +1,159 @@
-.App {
-  text-align: center;
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+body {
+  background-color: #f0f2f5;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  color: #333;
 }
 
-.App-link {
-  color: #61dafb;
+/* App Container */
+.app {
+  padding: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Main Card */
+.container {
+  max-width: 460px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 35px 25px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: 0.35s ease;
+  border: 1px solid #e4e4e4;
+}
+
+.container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Heading Styles */
+h2 {
+  color: #0070ba;
+  font-weight: 600;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+/* QR Section */
+.qr-section {
+  margin-bottom: 25px;
+}
+
+.qr-section h2 {
+  margin-bottom: 15px;
+  color: #00bfa6;
+  font-size: 16px;
+}
+
+/* QR Result */
+.qr-result div {
+  border-radius: 8px;
+  padding: 8px;
+  background-color: #e9f5ff;
+}
+
+/* Inputs */
+input[type="number"] {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #f9f9f9;
+  transition: border-color 0.25s ease;
+}
+
+input[type="number"]:focus {
+  border-color: #0070ba;
+  outline: none;
+}
+
+/* Button Groups */
+.btn-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-group button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #0070ba;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-group button:hover {
+  background: #005999;
+  transform: scale(1.04);
+}
+
+/* Download Button */
+.download-btn {
+  background: #28a745;
+}
+
+.download-btn:hover {
+  background: #1f8839;
+}
+
+/* Reset Button */
+.reset-btn {
+  background: #dc3545;
+}
+
+.reset-btn:hover {
+  background: #b52b37;
+}
+
+/* Amount Text Styling */
+.amount-text {
+  margin-top: 12px;
+  font-size: 21px;
+  color: #00bfa6;
+  font-weight: 600;
+}
+
+/* Subtle placeholder text */
+.placeholder-text {
+  margin-top: 20px;
+  color: #999;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .btn-group {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .btn-group button {
+    width: 100%;
   }
 }
