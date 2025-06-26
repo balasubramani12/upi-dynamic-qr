@@ -9,22 +9,22 @@ function App() {
   const [amount, setAmount] = useState('');
   const [qrImage, setQrImage] = useState(null);
 
+  // Generate UPI URL with or without amount
   const generateUPIURL = () => {
-    return `upi://pay?pa=${defaultUPI}&pn=${encodeURIComponent(merchantName)}&am=${amount}&tn=&mode=00`;
+    let url = `upi://pay?pa=${defaultUPI}&pn=${encodeURIComponent(merchantName)}`;
+    if (amount && amount > 0) {
+      url += `&am=${amount}`;
+    }
+    url += `&tn=&mode=00`;
+    return url;
   };
 
+  // Generate QR Code based on URL
   const handleGenerateQR = () => {
-    if (amount <= 0) {
-      setQrImage(null);
-      return;
-    }
-
     const url = generateUPIURL();
-
-    // Generate SVG with red color and increased size
     QRCodeLib.toString(url, {
       type: 'svg',
-      color: '#ff0000', // solid red for reliability
+      color: '#ff0000',
       background: '#ffffff',
       width: 160,
       height: 160,
@@ -34,7 +34,6 @@ function App() {
     });
   };
 
-  // 🔁 Dynamic QR Generation: regenerate QR whenever amount changes
   useEffect(() => {
     handleGenerateQR();
   }, [amount]);
@@ -68,27 +67,41 @@ function App() {
     img.src = url;
   };
 
-  const copyLink = () => {
-    const url = generateUPIURL();
-    navigator.clipboard.writeText(url).then(() => {
-      alert("UPI link copied to clipboard!");
-    });
-  };
-
   const resetQR = () => {
     setAmount('');
     setQrImage(null);
+    handleGenerateQR();
   };
 
   return (
     <div className="app">
       <div className="container">
-        <h2> K V H nextGen Store</h2>
+        <h2 id="title">KVH nextGen Store</h2>
+        <p className="upi-id">UPI ID: {defaultUPI}</p>
         <p>UPI QR Code Generator</p>
 
-        {/* Single Section - Default UPI */}
-        <section className="qr-section">
-          <h2>Upi Id: {defaultUPI}</h2>
+        <section className="info-section">
+          <div className="store-info">
+            <p className="yet-to-pay">
+              <span>Yet to Pay: ₹{amount || '0.00'}</span>
+            </p>
+          </div>
+          <hr />
+        </section>
+
+        <section className="qr-display">
+          <div className="qr-frame">
+            {qrImage ? (
+              <div dangerouslySetInnerHTML={{ __html: qrImage }} />
+            ) : (
+              <p className="placeholder-text">Scan & Pay using UPI</p>
+            )}
+            <span className="corner-bl"></span>
+            <span className="corner-br"></span>
+          </div>
+        </section>
+
+        <section className="input-section">
           <input
             type="number"
             placeholder="Enter amount (₹)"
@@ -97,28 +110,11 @@ function App() {
             min="0.01"
             step="0.01"
           />
-          <div className="btn-group">
-            <button onClick={copyLink}>🔗Copy Link</button>
-            <button onClick={resetQR} className="reset-btn">⏻ Reset</button>
+
+          <div className="btn-group-vertical">
+            <button onClick={downloadQR} className="download-btn">↓ Save QR_Code</button>
+            <button onClick={resetQR} className="reset-btn">☠️ Reset</button>
           </div>
-
-          {qrImage && (
-            <div className="qr-result" style={{ marginTop: '20px' }}>
-              <div dangerouslySetInnerHTML={{ __html: qrImage }} />
-              <p className="amount-text" style={{ marginTop: '10px', fontWeight: 'bold' }}>
-                Scan to Pay ₹{amount}
-              </p>
-            </div>
-          )}
-          {qrImage && (
-            <div className="btn-group" style={{ marginTop: '20px' }}>
-              <button onClick={downloadQR} className="download-btn"> ↓ Save QR_Code</button>
-            </div>
-          )}
-
-          {!amount && (
-            <p style={{ marginTop: '20px', color: '#888' }}>Enter an amount to generate QR</p>
-          )}
         </section>
       </div>
     </div>
